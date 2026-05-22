@@ -3,797 +3,921 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ZenCloud Global Consultants · Phil Myint</title>
-  <meta name="description" content="ZenCloud Global Consultants — Principal Architect Phil Myint. AI-powered enterprise architecture, agentic systems, and solution frameworks built for production.">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <meta name="description" content="One architect. Zero coding background. Building AI-powered tools in public with Claude. The raw journey — errors, fixes, lessons learned.">
+  <meta property="og:title" content="Learn with Claude — Phil Myint">
+  <meta property="og:description" content="One architect. Zero coding background. Building AI-powered tools in public.">
+  <title>Learn with Claude — Phil Myint</title>
   <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
     :root {
-      --dark:   #0D1820;
-      --navy:   #1B2A4A;
-      --gold:   #C9A84C;
-      --gold-dim: rgba(201,168,76,0.18);
-      --gold-border: rgba(201,168,76,0.35);
-      --text:   #E8E4D8;
-      --text2:  rgba(232,228,216,0.72);
-      --text3:  rgba(232,228,216,0.42);
-      --card-bg: rgba(27,42,74,0.28);
-      --card-border: rgba(232,228,216,0.08);
-      --live-bg: rgba(201,168,76,0.12);
-      --dev-bg:  rgba(232,228,216,0.05);
-      --font-serif: 'Playfair Display', Georgia, serif;
-      --font-sans:  'DM Sans', system-ui, sans-serif;
-      --font-mono:  'DM Mono', monospace;
+      --bg:      #191310;
+      --bg2:     #22190f;
+      --bg3:     #2d2215;
+      --border:  #3d2f1c;
+      --text:    #ede3d0;
+      --text2:   #a8967e;
+      --text3:   #6b5a45;
+      --accent:  #d4813a;
+      --accent2: #e8964a;
+      --red:     #e07060;
+      --green:   #78b878;
+      --redbg:   rgba(200,60,40,0.13);
+      --redbdr:  rgba(200,60,40,0.28);
+      --greenbg: rgba(80,160,80,0.11);
+      --greenbdr:rgba(80,160,80,0.25);
     }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     html { scroll-behavior: smooth; }
 
     body {
-      font-family: var(--font-sans);
-      background: var(--dark);
+      background: var(--bg);
       color: var(--text);
-      line-height: 1.6;
-      min-height: 100vh;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+      font-size: 16px;
+      line-height: 1.75;
+      -webkit-font-smoothing: antialiased;
     }
 
-    /* ── SKIP LINK ─────────────────────────────── */
-    .skip-link {
-      position: absolute; top: -100%; left: 1rem;
-      background: var(--gold); color: var(--dark);
-      padding: 0.5rem 1rem; font-size: 0.8rem;
-      font-family: var(--font-mono); border-radius: 0 0 4px 4px;
-      text-decoration: none; z-index: 200;
-      transition: top 0.2s;
-    }
-    .skip-link:focus { top: 0; }
-
-    /* ── NAV ────────────────────────────────────── */
-    nav {
-      position: sticky; top: 0; z-index: 100;
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 0 2.5rem;
-      height: 56px;
-      background: rgba(13,24,32,0.88);
-      backdrop-filter: blur(12px);
-      border-bottom: 1px solid var(--card-border);
-      transition: background 0.3s, box-shadow 0.3s;
-    }
-    nav.scrolled {
-      background: rgba(13,24,32,0.97);
-      box-shadow: 0 1px 20px rgba(0,0,0,0.4);
-    }
-    .nav-brand {
-      display: flex; align-items: baseline; gap: 0.6rem;
-      text-decoration: none;
-    }
-    .nav-brand-name {
-      font-family: var(--font-serif);
-      font-size: 1.05rem; font-weight: 500;
-      color: var(--text); letter-spacing: 0.02em;
-    }
-    .nav-brand-tag {
-      font-family: var(--font-mono);
-      font-size: 0.62rem; color: var(--gold);
-      letter-spacing: 0.08em; text-transform: uppercase;
-    }
-    .nav-links {
-      display: flex; align-items: center; gap: 1.8rem;
-      list-style: none;
-    }
-    .nav-links a {
-      font-size: 0.8rem; color: var(--text2);
-      text-decoration: none; letter-spacing: 0.04em;
-      font-family: var(--font-mono);
-      transition: color 0.2s;
-    }
-    .nav-links a:hover { color: var(--gold); }
-    .nav-links .nav-cta {
-      padding: 0.35rem 0.9rem;
-      border: 1px solid var(--gold-border);
-      border-radius: 3px; color: var(--gold);
-      transition: background 0.2s, color 0.2s;
-    }
-    .nav-links .nav-cta:hover {
-      background: var(--gold); color: var(--dark);
+    code, .mono {
+      font-family: 'Cascadia Code', 'Fira Code', Consolas, 'Courier New', monospace;
+      font-size: 0.875em;
     }
 
-    /* ── HERO ───────────────────────────────────── */
-    .hero {
-      padding: 7rem 2.5rem 5rem;
-      max-width: 900px; margin: 0 auto;
-    }
-    .hero-kicker {
-      font-family: var(--font-mono);
-      font-size: 0.72rem; color: var(--gold);
-      letter-spacing: 0.14em; text-transform: uppercase;
-      margin-bottom: 1.5rem;
-    }
-    .hero h1 {
-      font-family: var(--font-serif);
-      font-size: clamp(2.4rem, 5vw, 3.6rem);
-      font-weight: 500; line-height: 1.15;
-      color: var(--text); margin-bottom: 1.6rem;
-      letter-spacing: -0.01em;
-    }
-    .hero h1 em {
-      font-style: italic; color: var(--gold);
-    }
-    .hero-lead {
-      font-size: 1.08rem; color: var(--text2);
-      max-width: 640px; line-height: 1.75;
-      margin-bottom: 2.8rem;
-    }
-    .hero-actions {
-      display: flex; gap: 1rem; flex-wrap: wrap;
-    }
-    .btn-primary {
-      display: inline-flex; align-items: center; gap: 0.5rem;
-      padding: 0.75rem 1.6rem;
-      background: var(--gold); color: var(--dark);
-      font-family: var(--font-mono); font-size: 0.78rem;
-      font-weight: 500; letter-spacing: 0.06em;
-      text-decoration: none; border-radius: 3px;
-      transition: opacity 0.2s;
-    }
-    .btn-primary:hover { opacity: 0.88; }
-    .btn-secondary {
-      display: inline-flex; align-items: center; gap: 0.5rem;
-      padding: 0.75rem 1.6rem;
-      border: 1px solid var(--gold-border);
-      color: var(--text2); background: transparent;
-      font-family: var(--font-mono); font-size: 0.78rem;
-      letter-spacing: 0.06em;
-      text-decoration: none; border-radius: 3px;
-      transition: border-color 0.2s, color 0.2s;
-    }
-    .btn-secondary:hover { border-color: var(--gold); color: var(--gold); }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { color: var(--accent2); }
 
-    /* ── DIVIDER ────────────────────────────────── */
-    .divider {
-      width: 100%; max-width: 900px; margin: 0 auto;
-      border: none; border-top: 1px solid var(--card-border);
-    }
+    p { color: var(--text2); margin-bottom: 1rem; }
+    p:last-child { margin-bottom: 0; }
 
-    /* ── SECTIONS ───────────────────────────────── */
-    .section {
-      padding: 5rem 2.5rem;
-      max-width: 1100px; margin: 0 auto;
-    }
-    .section-header {
-      margin-bottom: 3rem;
-    }
-    .section-label {
-      font-family: var(--font-mono);
-      font-size: 0.68rem; color: var(--gold);
-      letter-spacing: 0.14em; text-transform: uppercase;
-      margin-bottom: 0.7rem;
-    }
-    .section-title {
-      font-family: var(--font-serif);
+    h2 {
       font-size: clamp(1.5rem, 3vw, 2rem);
-      font-weight: 500; color: var(--text);
-      line-height: 1.2;
-    }
-    .section-sub {
-      margin-top: 0.6rem;
-      font-size: 0.92rem; color: var(--text3);
-      max-width: 560px;
+      font-weight: 700;
+      color: var(--text);
+      line-height: 1.3;
+      margin-bottom: 0.75rem;
     }
 
-    /* ── CARD GRID ──────────────────────────────── */
-    .card-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-      gap: 1.4rem;
-    }
-    .card-grid.two-col {
-      grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
-    }
-
-    /* ── CARD ───────────────────────────────────── */
-    .card {
-      background: var(--card-bg);
-      border: 1px solid var(--card-border);
-      border-radius: 6px;
-      padding: 1.6rem 1.8rem;
-      position: relative;
-      transition: border-color 0.25s, background 0.25s, transform 0.2s;
-      display: flex; flex-direction: column;
-    }
-    .card:hover {
-      border-color: var(--gold-border);
-      background: rgba(27,42,74,0.45);
-      transform: translateY(-2px);
-    }
-    .card.live {
-      border-left: 3px solid var(--gold);
-    }
-    .card-status {
-      font-family: var(--font-mono);
-      font-size: 0.6rem; letter-spacing: 0.12em;
-      text-transform: uppercase; margin-bottom: 1rem;
-      display: inline-flex; align-items: center; gap: 0.4rem;
-    }
-    .status-live .card-status { color: var(--gold); }
-    .status-dev .card-status  { color: var(--text3); }
-    .status-research .card-status { color: rgba(130,160,200,0.7); }
-
-    .status-dot {
-      width: 5px; height: 5px; border-radius: 50%;
-      background: currentColor;
-    }
-    .status-live .status-dot {
-      background: var(--gold);
-      box-shadow: 0 0 6px rgba(201,168,76,0.6);
-      animation: pulse-dot 2.4s ease infinite;
-    }
-    @keyframes pulse-dot {
-      0%, 100% { opacity: 1; }
-      50%       { opacity: 0.4; }
-    }
-
-    .card-title {
-      font-family: var(--font-serif);
-      font-size: 1.15rem; font-weight: 500;
-      color: var(--text); margin-bottom: 0.5rem;
-      line-height: 1.25;
-    }
-    .card-desc {
-      font-size: 0.87rem; color: var(--text2);
-      line-height: 1.65; margin-bottom: 1.2rem;
-      flex: 1;
-    }
-    .card-tags {
-      display: flex; flex-wrap: wrap; gap: 0.4rem;
-      margin-bottom: 1.2rem;
-    }
-    .tag {
-      font-family: var(--font-mono);
-      font-size: 0.62rem; color: var(--text3);
-      background: rgba(232,228,216,0.05);
-      border: 1px solid rgba(232,228,216,0.1);
-      padding: 0.2rem 0.5rem; border-radius: 2px;
-      letter-spacing: 0.04em;
-    }
-    .card-links {
-      display: flex; gap: 1rem; align-items: center;
-      margin-top: auto; padding-top: 0.4rem;
-    }
-    .card-link-primary {
-      font-family: var(--font-mono);
-      font-size: 0.72rem; color: var(--gold);
-      text-decoration: none; letter-spacing: 0.04em;
-      transition: opacity 0.2s;
-    }
-    .card-link-primary:hover { opacity: 0.75; }
-    .card-link-secondary {
-      font-family: var(--font-mono);
-      font-size: 0.72rem; color: var(--text3);
-      text-decoration: none; letter-spacing: 0.04em;
-      transition: color 0.2s;
-    }
-    .card-link-secondary:hover { color: var(--text2); }
-
-    /* ── STAT ROW ───────────────────────────────── */
-    .stat-row {
-      display: flex; flex-wrap: wrap; gap: 3rem;
-      padding: 3.5rem 0; border-top: 1px solid var(--card-border);
-      border-bottom: 1px solid var(--card-border);
-      margin-bottom: 5rem;
-    }
-    .stat { flex: 1; min-width: 140px; }
-    .stat-num {
-      font-family: var(--font-serif);
-      font-size: 2.4rem; font-weight: 500;
-      color: var(--gold); line-height: 1;
+    h3 {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--text);
       margin-bottom: 0.4rem;
     }
-    .stat-label {
-      font-family: var(--font-mono);
-      font-size: 0.68rem; color: var(--text3);
-      letter-spacing: 0.08em; text-transform: uppercase;
+
+    /* ── NAV ── */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(25, 19, 16, 0.96);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border);
     }
 
-    /* ── ABOUT STRIP ────────────────────────────── */
-    .about-strip {
-      background: var(--navy);
-      border-top: 1px solid var(--card-border);
-      border-bottom: 1px solid var(--card-border);
-      padding: 4.5rem 2.5rem;
+    .nav-inner {
+      max-width: 1140px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      height: 54px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
     }
-    .about-inner {
-      max-width: 900px; margin: 0 auto;
-      display: grid; grid-template-columns: 1fr 1fr; gap: 4rem;
-      align-items: start;
+
+    .nav-brand {
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      color: var(--accent);
+      font-family: 'Cascadia Code', 'Fira Code', Consolas, monospace;
     }
-    .about-title {
-      font-family: var(--font-serif);
-      font-size: clamp(1.5rem, 2.5vw, 1.9rem);
-      font-weight: 500; line-height: 1.25;
+
+    .nav-links {
+      list-style: none;
+      display: flex;
+      gap: 2rem;
+    }
+
+    .nav-links a {
+      font-size: 13px;
+      color: var(--text2);
+      letter-spacing: 0.02em;
+      transition: color 0.15s;
+    }
+    .nav-links a:hover,
+    .nav-links a.active { color: var(--text); }
+
+    /* ── LAYOUT ── */
+    .container      { max-width: 760px;  margin: 0 auto; }
+    .container-wide { max-width: 1140px; margin: 0 auto; }
+
+    section { padding: 88px 2rem; }
+
+    .sep { border-bottom: 1px solid var(--border); }
+    .bg2 { background: var(--bg2); }
+
+    /* ── LABELS ── */
+    .label {
+      display: block;
+      font-size: 10.5px;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--accent);
       margin-bottom: 1rem;
     }
-    .about-body {
-      font-size: 0.9rem; color: var(--text2); line-height: 1.75;
-    }
-    .about-body p + p { margin-top: 1rem; }
-    .about-details {
-      display: flex; flex-direction: column; gap: 0.9rem;
-    }
-    .about-detail-row {
-      display: flex; align-items: baseline; gap: 0.8rem;
-      border-bottom: 1px solid var(--card-border);
-      padding-bottom: 0.9rem;
-    }
-    .about-detail-row:last-child { border-bottom: none; padding-bottom: 0; }
-    .about-detail-label {
-      font-family: var(--font-mono);
-      font-size: 0.62rem; color: var(--gold);
-      letter-spacing: 0.1em; text-transform: uppercase;
-      min-width: 90px; flex-shrink: 0;
-    }
-    .about-detail-value {
-      font-size: 0.87rem; color: var(--text2);
+
+    /* ── HOME ── */
+    #home { padding-top: 108px; padding-bottom: 108px; }
+
+    .home-tag {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--accent);
+      border: 1px solid rgba(212,129,58,0.45);
+      padding: 4px 12px;
+      margin-bottom: 2.25rem;
+      border-radius: 2px;
     }
 
-    /* ── FOOTER ─────────────────────────────────── */
-    footer {
-      padding: 3rem 2.5rem;
-      border-top: 1px solid var(--card-border);
-      max-width: 1100px; margin: 0 auto;
-      display: flex; align-items: center; justify-content: space-between;
-      flex-wrap: wrap; gap: 1rem;
+    h1 {
+      font-size: clamp(2.25rem, 5.5vw, 3.5rem);
+      font-weight: 800;
+      line-height: 1.15;
+      color: var(--text);
+      margin-bottom: 2rem;
+      letter-spacing: -0.01em;
     }
-    .footer-brand {
-      font-family: var(--font-serif);
-      font-size: 0.95rem; color: var(--text2);
+
+    .home-body {
+      max-width: 640px;
+      font-size: 1.05rem;
+      line-height: 1.85;
     }
-    .footer-meta {
-      font-family: var(--font-mono);
-      font-size: 0.65rem; color: var(--text3);
+
+    .home-body p { color: var(--text2); }
+
+    .callout {
+      margin-top: 2.5rem;
+      padding: 1.25rem 1.5rem;
+      background: var(--bg2);
+      border-left: 3px solid rgba(212,129,58,0.5);
+      font-size: 14.5px;
+      color: var(--text3);
+      font-style: italic;
+      line-height: 1.75;
+    }
+
+    .callout a { color: var(--text2); border-bottom: 1px solid var(--border); }
+    .callout a:hover { color: var(--accent); border-color: var(--accent); }
+
+    /* ── JOURNEY ── */
+    #journey .intro { max-width: 640px; margin-bottom: 3.5rem; }
+
+    .timeline { padding-left: 1.5rem; border-left: 1px solid var(--border); }
+
+    .tl-item {
+      position: relative;
+      padding-left: 2rem;
+      padding-bottom: 3rem;
+    }
+    .tl-item:last-child { padding-bottom: 0; }
+
+    .tl-dot {
+      position: absolute;
+      left: -2.25rem;
+      top: 7px;
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: var(--accent);
+      border: 2px solid var(--bg2);
+      flex-shrink: 0;
+    }
+
+    .tl-date {
+      font-size: 11.5px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      color: var(--accent);
+      margin-bottom: 0.3rem;
+    }
+
+    .tl-title {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 0.6rem;
+    }
+
+    .tl-body { font-size: 14.5px; color: var(--text2); line-height: 1.75; }
+    .tl-body p { font-size: inherit; margin-bottom: 0.5rem; }
+
+    .tag-broke {
+      display: inline-block;
+      font-size: 10.5px;
+      font-weight: 600;
+      background: var(--redbg);
+      color: var(--red);
+      border: 1px solid var(--redbdr);
+      padding: 2px 8px;
+      border-radius: 2px;
+      margin-right: 0.4rem;
+      vertical-align: middle;
+    }
+
+    .tag-learned {
+      display: inline-block;
+      font-size: 10.5px;
+      font-weight: 600;
+      background: var(--greenbg);
+      color: var(--green);
+      border: 1px solid var(--greenbdr);
+      padding: 2px 8px;
+      border-radius: 2px;
+      margin-right: 0.4rem;
+      vertical-align: middle;
+    }
+
+    .error-block {
+      margin: 0.75rem 0;
+      padding: 0.75rem 1rem;
+      background: var(--bg3);
+      border-left: 2px solid rgba(200,60,40,0.5);
+      font-family: 'Cascadia Code', 'Fira Code', Consolas, monospace;
+      font-size: 12px;
+      color: var(--red);
+      line-height: 1.65;
+      overflow-x: auto;
+    }
+
+    /* ── LESSONS ── */
+    #lessons .intro { max-width: 640px; margin-bottom: 3rem; }
+
+    .lessons-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 1.25rem;
+    }
+
+    .lesson-card {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      padding: 1.5rem;
+      border-radius: 3px;
+      display: flex;
+      flex-direction: column;
+      transition: border-color 0.15s;
+    }
+    .lesson-card:hover { border-color: rgba(212,129,58,0.45); }
+
+    .lesson-num {
+      font-size: 10.5px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      color: var(--text3);
+      margin-bottom: 0.5rem;
+    }
+
+    .lesson-card h3 { font-size: 1rem; margin-bottom: 0.5rem; }
+
+    .lesson-card p {
+      font-size: 13.5px;
+      color: var(--text2);
+      line-height: 1.65;
+      flex: 1;
+      margin-bottom: 1.25rem;
+    }
+
+    .pill-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.35rem;
+      margin-bottom: 1.1rem;
+    }
+
+    .pill {
+      font-size: 11px;
+      background: var(--bg3);
+      color: var(--text3);
+      padding: 2px 9px;
+      border-radius: 20px;
+      border: 1px solid var(--border);
+    }
+
+    .card-link {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--accent);
+      margin-top: auto;
+    }
+
+    /* ── CERTS ── */
+    #certs .intro { max-width: 640px; margin-bottom: 3rem; }
+
+    .certs-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .cert-card {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      padding: 2rem;
+      border-radius: 3px;
+      position: relative;
+      overflow: hidden;
+    }
+    .cert-card::before {
+      content: '';
+      position: absolute;
+      inset: 0 0 auto 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--accent) 0%, var(--accent2) 100%);
+    }
+
+    .cert-id {
+      display: inline-block;
+      font-size: 10.5px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      color: var(--accent);
+      margin-bottom: 0.75rem;
+    }
+
+    .cert-card h3 { font-size: 1.15rem; margin-bottom: 0.3rem; }
+    .cert-date { font-size: 12px; color: var(--text3); margin-bottom: 1rem; }
+    .cert-card p { font-size: 14px; line-height: 1.7; }
+
+    .cert-complete {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      margin-top: 1.25rem;
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--green);
       letter-spacing: 0.06em;
     }
-    .footer-links {
-      display: flex; gap: 1.5rem; list-style: none;
+    .cert-complete::before {
+      content: '';
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--green);
+      flex-shrink: 0;
     }
-    .footer-links a {
-      font-family: var(--font-mono);
-      font-size: 0.68rem; color: var(--text3);
-      text-decoration: none; letter-spacing: 0.06em;
-      transition: color 0.2s;
-    }
-    .footer-links a:hover { color: var(--gold); }
 
-    /* ── SCROLL REVEAL ──────────────────────────── */
-    .reveal { opacity: 0; transform: translateY(18px); transition: opacity 0.55s ease, transform 0.55s ease; }
-    .reveal.visible { opacity: 1; transform: none; }
+    /* ── PROJECTS ── */
+    #projects .intro { max-width: 640px; margin-bottom: 3rem; }
 
-    /* ── BACK TO TOP ────────────────────────────── */
-    .back-to-top {
-      position: fixed; bottom: 2rem; right: 2rem;
-      width: 38px; height: 38px;
-      background: rgba(201,168,76,0.15);
-      border: 1px solid var(--gold-border);
-      border-radius: 4px;
-      display: flex; align-items: center; justify-content: center;
-      cursor: pointer; color: var(--gold);
-      opacity: 0; transform: translateY(10px);
-      transition: opacity 0.3s, transform 0.3s, background 0.2s;
-      pointer-events: none; text-decoration: none;
-      font-size: 1.1rem; line-height: 1;
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 1rem;
     }
-    .back-to-top.visible {
-      opacity: 1; transform: none; pointer-events: all;
-    }
-    .back-to-top:hover { background: rgba(201,168,76,0.28); }
 
-    /* ── RESPONSIVE ─────────────────────────────── */
-    @media (max-width: 700px) {
-      nav { padding: 0 1.2rem; }
-      .hero { padding: 5rem 1.2rem 3.5rem; }
-      .section { padding: 3.5rem 1.2rem; }
-      .about-inner { grid-template-columns: 1fr; gap: 2.5rem; }
-      .card-grid.two-col { grid-template-columns: 1fr; }
-      .stat-row { gap: 1.8rem; }
-      footer { flex-direction: column; align-items: flex-start; }
+    .proj-card {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      padding: 1.25rem 1.5rem;
+      border-radius: 3px;
+      display: flex;
+      flex-direction: column;
+      transition: border-color 0.15s;
+    }
+    .proj-card:hover { border-color: rgba(212,129,58,0.45); }
+
+    .proj-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 0.75rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .proj-name {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--text);
+      font-family: 'Cascadia Code', 'Fira Code', Consolas, monospace;
+      word-break: break-all;
+    }
+
+    .proj-live {
+      font-size: 10.5px;
+      font-weight: 700;
+      color: var(--green);
+      letter-spacing: 0.06em;
+      flex-shrink: 0;
+    }
+
+    .proj-card p {
+      font-size: 13.5px;
+      color: var(--text2);
+      line-height: 1.65;
+      flex: 1;
+      margin-bottom: 0.75rem;
+    }
+
+    .proj-stack {
+      font-size: 11.5px;
+      color: var(--text3);
+      margin-bottom: 0.75rem;
+    }
+
+    .proj-links {
+      display: flex;
+      gap: 1.25rem;
+    }
+    .proj-links a {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--accent);
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      padding: 3rem 2rem;
+      text-align: center;
+    }
+
+    footer p {
+      font-size: 13px;
+      color: var(--text3);
+      margin-bottom: 0.4rem;
+    }
+
+    footer a {
+      color: var(--text3);
+      border-bottom: 1px solid var(--border);
+    }
+    footer a:hover {
+      color: var(--text2);
+      border-color: var(--text2);
+    }
+
+    /* ── MOBILE ── */
+    @media (max-width: 680px) {
       .nav-links { display: none; }
+      section { padding: 64px 1.25rem; }
+      #home { padding-top: 72px; padding-bottom: 80px; }
+      .lessons-grid,
+      .certs-grid,
+      .projects-grid { grid-template-columns: 1fr; }
     }
   </style>
 </head>
 <body>
 
-<a href="#main" class="skip-link">Skip to content</a>
-
-<!-- ── NAV ──────────────────────────────────────── -->
-<nav id="mainNav">
-  <a href="#" class="nav-brand" aria-label="ZenCloud home">
-    <span class="nav-brand-name">ZenCloud</span>
-    <span class="nav-brand-tag">Global Consultants</span>
-  </a>
-  <ul class="nav-links">
-    <li><a href="#live">Live Products</a></li>
-    <li><a href="#development">In Development</a></li>
-    <li><a href="#knowledge">Knowledge</a></li>
-    <li><a href="#about">About</a></li>
-    <li>
-      <a href="https://velocityarchitectureframework.com" target="_blank" rel="noopener" class="nav-cta">
-        Launch VAF ↗
-      </a>
-    </li>
-  </ul>
+<!-- ── NAV ── -->
+<nav>
+  <div class="nav-inner">
+    <a href="#home" class="nav-brand">learn-with-claude</a>
+    <ul class="nav-links">
+      <li><a href="#journey">Journey</a></li>
+      <li><a href="#lessons">Lessons</a></li>
+      <li><a href="#certs">Certs</a></li>
+      <li><a href="#projects">Projects</a></li>
+    </ul>
+  </div>
 </nav>
 
-<!-- ── HERO ─────────────────────────────────────── -->
-<header class="hero" id="main">
-  <p class="hero-kicker">Phil Myint · Principal Architect · Brisbane</p>
-  <h1>Enterprise architecture,<br><em>built with AI</em> — in production.</h1>
-  <p class="hero-lead">
-    ZenCloud Global Consultants designs and ships AI-powered systems, solution frameworks, and practitioner tooling. Every product in this hub is built, directed, and delivered — not prototyped.
-  </p>
-  <div class="hero-actions">
-    <a href="https://velocityarchitectureframework.com" target="_blank" rel="noopener" class="btn-primary">
-      Open the VAF Platform ↗
-    </a>
-    <a href="https://github.com/ZenCloudAU" target="_blank" rel="noopener" class="btn-secondary">
-      GitHub Organisation ↗
-    </a>
-  </div>
-</header>
 
-<hr class="divider">
-
-<!-- ── STAT ROW ─────────────────────────────────── -->
-<div class="section" style="padding-top: 4rem; padding-bottom: 2rem;">
-  <div class="stat-row">
-    <div class="stat">
-      <div class="stat-num">5</div>
-      <div class="stat-label">Live products &amp; platforms</div>
+<!-- ── HOME ── -->
+<section id="home" class="sep">
+  <div class="container">
+    <span class="home-tag">Building in public &middot; 2026</span>
+    <h1>One Architect.<br>Zero Coding Background.<br>Building in Public.</h1>
+    <div class="home-body">
+      <p>Zero coding background. Came into this knowing systems and decisions, not syntax. Every tool in here was directed by me and written entirely by Claude.</p>
+      <p>This started as a way to document what I was learning. It became a record of what was actually built &mdash; twelve repos, live deployments on Azure, AI tools running in production.</p>
+      <p>The errors are in here. The exact error messages. The exact fixes. The sessions where I genuinely didn't know what was happening. That's the point. This is not cleaned up. This is the log.</p>
     </div>
-    <div class="stat">
-      <div class="stat-num">3</div>
-      <div class="stat-label">Systems in active development</div>
-    </div>
-    <div class="stat">
-      <div class="stat-num">3</div>
-      <div class="stat-label">Certification study hubs</div>
-    </div>
-    <div class="stat">
-      <div class="stat-num">AI-first</div>
-      <div class="stat-label">Claude as implementation layer</div>
-    </div>
-  </div>
-</div>
-
-<!-- ── LIVE PRODUCTS ─────────────────────────────── -->
-<section class="section" id="live">
-  <div class="section-header reveal">
-    <p class="section-label">Live &amp; Deployed</p>
-    <h2 class="section-title">Production systems you can use now</h2>
-    <p class="section-sub">Fully deployed products running in production. No staging environments, no demos.</p>
-  </div>
-
-  <div class="card-grid two-col">
-
-    <div class="card live status-live reveal">
-      <span class="card-status"><span class="status-dot"></span>Live</span>
-      <h3 class="card-title">Velocity Architecture Framework</h3>
-      <p class="card-desc">
-        AI-powered enterprise architecture advisor. Multi-agent system: GC agent (governance &amp; context), TOM agent (target operating model), ADR agent (architecture decision records). Deployed to Azure Container Instances.
-      </p>
-      <div class="card-tags">
-        <span class="tag">TypeScript 5.3</span>
-        <span class="tag">Node.js 20</span>
-        <span class="tag">Claude API</span>
-        <span class="tag">Azure ACI</span>
-        <span class="tag">Docker</span>
-      </div>
-      <div class="card-links">
-        <a href="https://velocityarchitectureframework.com" target="_blank" rel="noopener" class="card-link-primary">velocityarchitectureframework.com ↗</a>
-        <a href="https://github.com/ZenCloudAU/velocity-architecture" target="_blank" rel="noopener" class="card-link-secondary">GitHub →</a>
-      </div>
-    </div>
-
-    <div class="card live status-live reveal">
-      <span class="card-status"><span class="status-dot"></span>Live</span>
-      <h3 class="card-title">VSF Match</h3>
-      <p class="card-desc">
-        Vendor and solution framework matching tool. Guides architects through structured selection logic to identify the best-fit frameworks and vendors for a given solution context.
-      </p>
-      <div class="card-tags">
-        <span class="tag">JavaScript</span>
-        <span class="tag">HTML/CSS</span>
-        <span class="tag">GitHub Pages</span>
-      </div>
-      <div class="card-links">
-        <a href="https://zencloudau.github.io/vsf-match/" target="_blank" rel="noopener" class="card-link-primary">Launch ↗</a>
-        <a href="https://github.com/ZenCloudAU/vsf-match" target="_blank" rel="noopener" class="card-link-secondary">GitHub →</a>
-      </div>
-    </div>
-
-    <div class="card live status-live reveal">
-      <span class="card-status"><span class="status-dot"></span>Live</span>
-      <h3 class="card-title">SAP EA Certification Platform</h3>
-      <p class="card-desc">
-        Interactive study platform for the SAP Enterprise Architecture certification. Domain breakdowns, practice questions, and scenario-based learning — structured for fast, high-retention exam preparation.
-      </p>
-      <div class="card-tags">
-        <span class="tag">SAP EA</span>
-        <span class="tag">HTML/CSS/JS</span>
-        <span class="tag">GitHub Pages</span>
-      </div>
-      <div class="card-links">
-        <a href="https://zencloudau.github.io/SAPEACertification" target="_blank" rel="noopener" class="card-link-primary">Open platform ↗</a>
-        <a href="https://github.com/ZenCloudAU/SAPEACertification" target="_blank" rel="noopener" class="card-link-secondary">GitHub →</a>
-      </div>
-    </div>
-
-    <div class="card live status-live reveal">
-      <span class="card-status"><span class="status-dot"></span>Live</span>
-      <h3 class="card-title">Azure Solutions Architect Platform</h3>
-      <p class="card-desc">
-        Study platform for the Azure Solutions Architect Expert (AZ-305) certification. Covers the full exam domain set with scenario-based questions and reference architecture walkthroughs.
-      </p>
-      <div class="card-tags">
-        <span class="tag">AZ-305</span>
-        <span class="tag">Azure</span>
-        <span class="tag">HTML/CSS/JS</span>
-        <span class="tag">GitHub Pages</span>
-      </div>
-      <div class="card-links">
-        <a href="https://zencloudau.github.io/AzureSACertification" target="_blank" rel="noopener" class="card-link-primary">Open platform ↗</a>
-        <a href="https://github.com/ZenCloudAU/AzureSACertification" target="_blank" rel="noopener" class="card-link-secondary">GitHub →</a>
-      </div>
-    </div>
-
-    <div class="card live status-live reveal">
-      <span class="card-status"><span class="status-dot"></span>Live</span>
-      <h3 class="card-title">Agentic AI Certification Hub</h3>
-      <p class="card-desc">
-        Structured study hub for two agentic AI certifications: CCA-F (Claude Certified Architect – Foundations, Anthropic) and GH-600 (GitHub Certified: Agentic AI Developer). Shared foundations, platform-specific exam layers.
-      </p>
-      <div class="card-tags">
-        <span class="tag">CCA-F</span>
-        <span class="tag">GH-600</span>
-        <span class="tag">Anthropic</span>
-        <span class="tag">GitHub</span>
-        <span class="tag">Markdown</span>
-      </div>
-      <div class="card-links">
-        <a href="https://zencloudau.github.io/agentic-cert/" target="_blank" rel="noopener" class="card-link-primary">Open hub ↗</a>
-        <a href="https://github.com/ZenCloudAU/agentic-cert" target="_blank" rel="noopener" class="card-link-secondary">GitHub →</a>
-      </div>
-    </div>
-
   </div>
 </section>
 
-<hr class="divider">
 
-<!-- ── IN DEVELOPMENT ────────────────────────────── -->
-<section class="section" id="development">
-  <div class="section-header reveal">
-    <p class="section-label">In Development</p>
-    <h2 class="section-title">Systems being built now</h2>
-    <p class="section-sub">Active builds. Not vaporware — code exists, deployment is the next step.</p>
-  </div>
-
-  <div class="card-grid">
-
-    <div class="card status-dev reveal">
-      <span class="card-status"><span class="status-dot"></span>In Development</span>
-      <h3 class="card-title">EA Artefact Generator</h3>
-      <p class="card-desc">
-        Automated generation of enterprise architecture artefacts from structured inputs. Produces HLD, LLD, ADRs, TOM documents, and other SDLC-standard outputs using Claude as the generation layer.
-      </p>
-      <div class="card-tags">
-        <span class="tag">Claude API</span>
-        <span class="tag">EA Artefacts</span>
-        <span class="tag">Automation</span>
-      </div>
-      <div class="card-links">
-        <a href="https://github.com/ZenCloudAU/ea-artefact-generator" target="_blank" rel="noopener" class="card-link-secondary">GitHub →</a>
-      </div>
+<!-- ── JOURNEY ── -->
+<section id="journey" class="bg2 sep">
+  <div class="container">
+    <div class="intro">
+      <span class="label">The Journey</span>
+      <h2>What actually happened</h2>
+      <p>These are the real sessions. The real errors. Not repositioned as "learning opportunities" &mdash; just what broke, what the error said, and what it took to fix it.</p>
     </div>
 
-    <div class="card status-dev reveal">
-      <span class="card-status"><span class="status-dot"></span>In Development</span>
-      <h3 class="card-title">PMI Portal</h3>
-      <p class="card-desc">
-        Project Management Institute integration portal. Structured tooling for PMI-aligned project governance, artefact management, and delivery tracking for enterprise engagements.
-      </p>
-      <div class="card-tags">
-        <span class="tag">PMI</span>
-        <span class="tag">Governance</span>
-        <span class="tag">Enterprise</span>
-      </div>
-      <div class="card-links">
-        <a href="https://github.com/ZenCloudAU/pmi-portal" target="_blank" rel="noopener" class="card-link-secondary">GitHub →</a>
-      </div>
-    </div>
+    <div class="timeline">
 
-    <div class="card status-dev reveal">
-      <span class="card-status"><span class="status-dot"></span>In Development</span>
-      <h3 class="card-title">VAF Solution Architecture Framework</h3>
-      <p class="card-desc">
-        Published framework documentation for the Velocity Architecture Framework's solution architecture layer. Structured methodology, pattern library, and decision frameworks for solution architects.
-      </p>
-      <div class="card-tags">
-        <span class="tag">Static HTML</span>
-        <span class="tag">Framework</span>
-        <span class="tag">Solution Architecture</span>
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-date">Early 2026 &mdash; Session Zero</div>
+        <div class="tl-title">No map. Starting anyway.</div>
+        <div class="tl-body">
+          <p>Started with a blank machine and a clear outcome: build a live AI-powered web application. No tutorials, no bootcamp. Direct to production. The first thing I tried to do was navigate to a folder.</p>
+          <div class="error-block">bash: cd: No such file or directory<br>cd C:\Users\phill\Documents\GitHub\velocity-architecture</div>
+          <p><span class="tag-broke">broke</span> Pasted a Windows path into Git Bash. Git Bash doesn't speak Windows.</p>
+          <p><span class="tag-learned">learned</span> <code>C:\path</code> becomes <code>/c/path</code> in Git Bash. One rule. Applies every time, forever.</p>
+        </div>
       </div>
-      <div class="card-links">
-        <a href="https://github.com/ZenCloudAU/vaf-sa" target="_blank" rel="noopener" class="card-link-secondary">GitHub →</a>
-      </div>
-    </div>
 
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-date">Phase 1 &mdash; VAF Agentic Architect</div>
+        <div class="tl-title">Core agent: orchestrator, agents, KB loader, action engine.</div>
+        <div class="tl-body">
+          <p>The app reads the VAF knowledge base from GitHub, sends a topic to Claude, gets back an enterprise architecture artefact, commits it to the repo. Built in TypeScript. First real thing I'd directed being built. Then tried to push it.</p>
+          <div class="error-block">error: src refspec main does not match any</div>
+          <p><span class="tag-broke">broke</span> Tried <code>git push -u origin main</code> but the branch was called <code>master</code>.</p>
+          <p><span class="tag-learned">learned</span> Newer GitHub defaults to <code>main</code>. Older local git defaults to <code>master</code>. They don't tell you when they disagree. Check first with <code>git branch</code>.</p>
+        </div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-date">Phase 2 &mdash; Azure Deployment</div>
+        <div class="tl-title">CI/CD pipeline: push to main triggers build and deploy.</div>
+        <div class="tl-body">
+          <p>Wired up GitHub Actions. Every push: TypeScript compiles, Docker image builds, pushes to GHCR, deploys to Azure Container Instances. You push. It ships. You don't touch Azure manually. That's the goal. The pipeline failed on the first run.</p>
+          <div class="error-block">ERROR: Incorrectly formatted secure environment settings.<br>Argument values should be in the format a=b c=d</div>
+          <p><span class="tag-broke">broke</span> Environment variables in the <code>az container create</code> command were split across lines. YAML looked fine. Azure CLI did not agree.</p>
+          <p><span class="tag-learned">learned</span> Azure CLI expects environment variables as space-separated <code>key=value</code> pairs on a single line. Multi-line YAML wrapping breaks it silently until the error surfaces at deploy time.</p>
+        </div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-date">Phase 3&ndash;4 &mdash; GitHub Commits + Browser Portal</div>
+        <div class="tl-title">Artefacts commit to GitHub. Users access via browser.</div>
+        <div class="tl-body">
+          <p>Generated artefacts now write to <code>/artefacts/{type}/</code> in the repo. Added a browser portal: enter topic, click generate, see the artefact, link to GitHub. Deploy succeeded. Container started. App never responded.</p>
+          <div class="error-block"># start.sh was running:<br>node dist/index.js<br><br># compiled output actually lived at:<br>dist/app/app.js</div>
+          <p><span class="tag-broke">broke</span> One file owned the entry point path. Another file referenced a different path. The container started clean and died immediately with no useful error.</p>
+          <p><span class="tag-learned">learned</span> One source of truth. <code>package.json</code> owns the correct path via <code>npm start</code>. Everything else defers to it. This is the pattern for every path reference in a project.</p>
+        </div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-date">Mid 2026 &mdash; Expanding the practice</div>
+        <div class="tl-title">The pattern established. Scaling to more tools.</div>
+        <div class="tl-body">
+          <p>VAF Agentic Architect live at velocityarchitectureframework.com. The mode is proven: define the outcome, give Claude the brief, read and review the code, ship. Applied to VSF Match, EA Artefact Generator, four certification study sites, a trading dashboard. All built the same way.</p>
+        </div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-date">May 2026</div>
+        <div class="tl-title">Two certifications completed. 12 repos live.</div>
+        <div class="tl-body">
+          <p>Completed CCA-F (Claude 101) and GH-600 (Claude Code in Action) back to back. Studied for both while actively building with the tools they certify. The theory was already practice. Zero coding experience at the start. Twelve repos now.</p>
+        </div>
+      </div>
+
+    </div>
   </div>
 </section>
 
-<hr class="divider">
 
-<!-- ── KNOWLEDGE & TOOLING ───────────────────────── -->
-<section class="section" id="knowledge">
-  <div class="section-header reveal">
-    <p class="section-label">Knowledge &amp; Tooling</p>
-    <h2 class="section-title">Research, learning, and automation</h2>
-    <p class="section-sub">Open reference materials, structured learning content, and workflow tooling.</p>
-  </div>
-
-  <div class="card-grid">
-
-    <div class="card live status-live reveal">
-      <span class="card-status"><span class="status-dot"></span>Live</span>
-      <h3 class="card-title">Learn With Claude</h3>
-      <p class="card-desc">
-        Structured learning methodology for building production software using Claude as the implementation layer. Covers the full workflow from problem framing to deployment. This is the hub you are reading now.
-      </p>
-      <div class="card-tags">
-        <span class="tag">Claude Code</span>
-        <span class="tag">Methodology</span>
-        <span class="tag">Markdown</span>
-        <span class="tag">GitHub Pages</span>
-      </div>
-      <div class="card-links">
-        <a href="https://github.com/ZenCloudAU/learn-with-claude" target="_blank" rel="noopener" class="card-link-secondary">GitHub →</a>
-      </div>
+<!-- ── LESSONS ── -->
+<section id="lessons" class="sep">
+  <div class="container-wide">
+    <div class="intro container">
+      <span class="label">Lessons</span>
+      <h2>The modules</h2>
+      <p>Built from real sessions. Nothing here is generic. Every example, every error, every command comes from the actual VAF Agentic Architect project. The point isn't memorisation &mdash; it's understanding it well enough to direct it.</p>
     </div>
 
-    <div class="card status-research reveal">
-      <span class="card-status"><span class="status-dot"></span>Research</span>
-      <h3 class="card-title">CISSP Certification Study</h3>
-      <p class="card-desc">
-        Structured study notes and domain breakdowns for the CISSP (Certified Information Systems Security Professional) certification. Domain mapping, key controls, and exam-pattern analysis.
-      </p>
-      <div class="card-tags">
-        <span class="tag">CISSP</span>
-        <span class="tag">Security</span>
-        <span class="tag">ISC²</span>
-        <span class="tag">Markdown</span>
-      </div>
-      <div class="card-links">
-        <a href="https://github.com/ZenCloudAU/CISSPCertification" target="_blank" rel="noopener" class="card-link-secondary">GitHub →</a>
-      </div>
-    </div>
+    <div class="container-wide lessons-grid">
 
-    <div class="card status-dev reveal">
-      <span class="card-status"><span class="status-dot"></span>Tooling</span>
-      <h3 class="card-title">ZenCloud OS</h3>
-      <p class="card-desc">
-        Python workflow automation scripts for daily ZenCloud operations. Automates repetitive tasks, integrates with external systems, and keeps the practice running efficiently without manual overhead.
-      </p>
-      <div class="card-tags">
-        <span class="tag">Python</span>
-        <span class="tag">Automation</span>
-        <span class="tag">Workflow</span>
+      <div class="lesson-card">
+        <div class="lesson-num">MODULE 00</div>
+        <h3>Start Here: The Mental Model</h3>
+        <p>What architect-led development actually means. The full stack explained in plain language &mdash; TypeScript, Node, Express, Docker, Azure, GitHub Actions. What happens when you push to main.</p>
+        <div class="pill-row">
+          <span class="pill">Mental model</span>
+          <span class="pill">Stack overview</span>
+          <span class="pill">The flow</span>
+        </div>
+        <a class="card-link" href="https://github.com/ZenCloudAU/learn-with-claude/tree/master/00-start-here" target="_blank" rel="noopener">Read on GitHub &rarr;</a>
       </div>
-      <div class="card-links">
-        <a href="https://github.com/ZenCloudAU/zencloud-os" target="_blank" rel="noopener" class="card-link-secondary">GitHub →</a>
-      </div>
-    </div>
 
+      <div class="lesson-card">
+        <div class="lesson-num">MODULE 01</div>
+        <h3>The Tools</h3>
+        <p>VS Code, Git Bash, and the terminal. What each does, why Git Bash specifically on Windows, and why the path confusion happened. The exact error, the rule that prevents it.</p>
+        <div class="pill-row">
+          <span class="pill">VS Code</span>
+          <span class="pill">Git Bash</span>
+          <span class="pill">Paths</span>
+          <span class="pill">Windows</span>
+        </div>
+        <a class="card-link" href="https://github.com/ZenCloudAU/learn-with-claude/tree/master/01-the-tools" target="_blank" rel="noopener">Read on GitHub &rarr;</a>
+      </div>
+
+      <div class="lesson-card">
+        <div class="lesson-num">MODULE 02</div>
+        <h3>Git and GitHub</h3>
+        <p>The difference between git (local tool) and GitHub (remote host). The exact workflow used every session. How GitHub Actions connects a push to a live deployment in Azure.</p>
+        <div class="pill-row">
+          <span class="pill">Git workflow</span>
+          <span class="pill">GitHub Actions</span>
+          <span class="pill">Secrets</span>
+          <span class="pill">CI/CD</span>
+        </div>
+        <a class="card-link" href="https://github.com/ZenCloudAU/learn-with-claude/tree/master/02-git-and-github" target="_blank" rel="noopener">Read on GitHub &rarr;</a>
+      </div>
+
+      <div class="lesson-card">
+        <div class="lesson-num">MODULE 03</div>
+        <h3>Terminal Commands</h3>
+        <p>Plain-English reference for every command that appeared in these sessions. Navigation, git, npm, Docker, Azure CLI &mdash; with explanations, not just syntax listings.</p>
+        <div class="pill-row">
+          <span class="pill">Navigation</span>
+          <span class="pill">Git</span>
+          <span class="pill">npm</span>
+          <span class="pill">Reference</span>
+        </div>
+        <a class="card-link" href="https://github.com/ZenCloudAU/learn-with-claude/tree/master/03-terminal-commands" target="_blank" rel="noopener">Read on GitHub &rarr;</a>
+      </div>
+
+      <div class="lesson-card">
+        <div class="lesson-num">MODULE 04</div>
+        <h3>TypeScript Basics</h3>
+        <p>You don't need to write it. You need to read it. Variables, functions, async/await, the Anthropic SDK call, Express routes &mdash; using the actual VAF codebase, not invented examples.</p>
+        <div class="pill-row">
+          <span class="pill">TypeScript</span>
+          <span class="pill">Anthropic SDK</span>
+          <span class="pill">Express</span>
+          <span class="pill">package.json</span>
+        </div>
+        <a class="card-link" href="https://github.com/ZenCloudAU/learn-with-claude/tree/master/04-typescript-basics" target="_blank" rel="noopener">Read on GitHub &rarr;</a>
+      </div>
+
+      <div class="lesson-card">
+        <div class="lesson-num">MODULE 05</div>
+        <h3>The VAF Project</h3>
+        <p>How the VAF Agentic Architect actually works. The four build phases. The architecture diagram. The files, what they do, and the bugs that broke it during construction.</p>
+        <div class="pill-row">
+          <span class="pill">Architecture</span>
+          <span class="pill">Agents</span>
+          <span class="pill">Build phases</span>
+          <span class="pill">Azure</span>
+        </div>
+        <a class="card-link" href="https://github.com/ZenCloudAU/learn-with-claude/tree/master/05-the-vaf-project" target="_blank" rel="noopener">Read on GitHub &rarr;</a>
+      </div>
+
+      <div class="lesson-card">
+        <div class="lesson-num">MODULE 06</div>
+        <h3>Docker and Azure</h3>
+        <p>The container concept explained without jargon. The Dockerfile line by line. How nginx acts as a reverse proxy. How to read a GitHub Actions log when a deploy fails.</p>
+        <div class="pill-row">
+          <span class="pill">Docker</span>
+          <span class="pill">Azure ACI</span>
+          <span class="pill">nginx</span>
+          <span class="pill">Deploy logs</span>
+        </div>
+        <a class="card-link" href="https://github.com/ZenCloudAU/learn-with-claude/tree/master/06-docker-and-azure" target="_blank" rel="noopener">Read on GitHub &rarr;</a>
+      </div>
+
+      <div class="lesson-card">
+        <div class="lesson-num">MODULE 07</div>
+        <h3>Troubleshooting</h3>
+        <p>Every real error from real sessions. The exact message, the exact cause, the exact fix. Plus the debugging pattern: how to read an error message precisely and fix the specific thing it names.</p>
+        <div class="pill-row">
+          <span class="pill">Errors</span>
+          <span class="pill">Git</span>
+          <span class="pill">Azure</span>
+          <span class="pill">Node.js</span>
+        </div>
+        <a class="card-link" href="https://github.com/ZenCloudAU/learn-with-claude/tree/master/07-troubleshooting" target="_blank" rel="noopener">Read on GitHub &rarr;</a>
+      </div>
+
+    </div>
   </div>
 </section>
 
-<hr class="divider">
 
-<!-- ── ABOUT ─────────────────────────────────────── -->
-<div class="about-strip" id="about">
-  <div class="about-inner">
-    <div>
-      <h2 class="about-title">Principal Architect.<br>Zero background. All production.</h2>
-      <div class="about-body">
-        <p>
-          I have no coding background. I think in systems, decisions, and frameworks. Every product in this hub was designed and directed by me — and written entirely by Claude.
-        </p>
-        <p>
-          The model is simple: I define the problem, the constraints, and the outcome. Claude writes the code. I read, review, and ship. This is not assisted development — it is a new delivery model for architects who can think in systems but have never had a language to execute with.
-        </p>
-        <p>
-          The Velocity Architecture Framework is the flagship proof point: a multi-agent, production system running on Azure, built entirely this way.
-        </p>
-      </div>
+<!-- ── CERTS ── -->
+<section id="certs" class="bg2 sep">
+  <div class="container">
+    <div class="intro">
+      <span class="label">Certifications</span>
+      <h2>Both completed May 2026</h2>
+      <p>Studied for both while actively building with the tools they certify. The theory was already practice. These aren't qualifications held in isolation &mdash; they formalise what was already being done.</p>
     </div>
-    <div class="about-details">
-      <div class="about-detail-row">
-        <span class="about-detail-label">Role</span>
-        <span class="about-detail-value">Principal Architect</span>
+
+    <div class="certs-grid">
+
+      <div class="cert-card">
+        <span class="cert-id">CCA-F</span>
+        <h3>Claude 101</h3>
+        <div class="cert-date">Anthropic &mdash; Completed May 2026</div>
+        <p>Foundational certification covering how Claude works, responsible use, prompt design, and the capabilities and limits of large language models in production.</p>
+        <div class="cert-complete">Completed</div>
       </div>
-      <div class="about-detail-row">
-        <span class="about-detail-label">Firm</span>
-        <span class="about-detail-value">ZenCloud Global Consultants</span>
+
+      <div class="cert-card">
+        <span class="cert-id">GH-600</span>
+        <h3>Claude Code in Action</h3>
+        <div class="cert-date">Anthropic &mdash; Completed May 2026</div>
+        <p>Practitioner-level certification in Claude Code &mdash; the CLI tool for architect-led development. Agentic workflows, tool use, using Claude as a full implementation layer. This is the exact mode of work documented in this journal.</p>
+        <div class="cert-complete">Completed</div>
       </div>
-      <div class="about-detail-row">
-        <span class="about-detail-label">Location</span>
-        <span class="about-detail-value">Brisbane, Australia</span>
-      </div>
-      <div class="about-detail-row">
-        <span class="about-detail-label">Certifications</span>
-        <span class="about-detail-value">SAPEA · AZ-305 · CCA-F · GH-600 (Beta)</span>
-      </div>
-      <div class="about-detail-row">
-        <span class="about-detail-label">Stack</span>
-        <span class="about-detail-value">Claude API · TypeScript · Azure · GitHub</span>
-      </div>
-      <div class="about-detail-row">
-        <span class="about-detail-label">Contact</span>
-        <span class="about-detail-value">
-          <a href="mailto:phil@myintenterprises.com" style="color: var(--gold); text-decoration: none;">phil@myintenterprises.com</a>
-        </span>
-      </div>
+
     </div>
   </div>
-</div>
+</section>
 
-<!-- ── FOOTER ─────────────────────────────────────── -->
+
+<!-- ── PROJECTS ── -->
+<section id="projects" class="sep">
+  <div class="container-wide">
+    <div class="intro container">
+      <span class="label">Live Projects</span>
+      <h2>12 repos. All built the same way.</h2>
+      <p>Every repository in the ZenCloudAU GitHub organisation. Directed by an architect. Written by Claude. Zero lines manually typed.</p>
+    </div>
+
+    <div class="projects-grid">
+
+      <div class="proj-card">
+        <div class="proj-head">
+          <span class="proj-name">velocity-architecture</span>
+          <span class="proj-live">live</span>
+        </div>
+        <p>VAF Agentic Architect. Live AI-powered EA artefact generator. Reads the VAF knowledge base, calls Claude, commits structured artefacts back to GitHub.</p>
+        <div class="proj-stack">TypeScript &middot; Node.js &middot; Express &middot; Docker &middot; Azure &middot; Anthropic SDK</div>
+        <div class="proj-links">
+          <a href="https://github.com/ZenCloudAU/velocity-architecture" target="_blank" rel="noopener">GitHub</a>
+          <a href="https://velocityarchitectureframework.com" target="_blank" rel="noopener">Live site</a>
+        </div>
+      </div>
+
+      <div class="proj-card">
+        <div class="proj-head">
+          <span class="proj-name">vaf-sa</span>
+          <span class="proj-live">live</span>
+        </div>
+        <p>VAF Solution Architecture Framework. Published static framework for solution architects using the Velocity Architecture Framework methodology.</p>
+        <div class="proj-stack">HTML &middot; CSS &middot; GitHub Pages</div>
+        <div class="proj-links">
+          <a href="https://github.com/ZenCloudAU/vaf-sa" target="_blank" rel="noopener">GitHub</a>
+          <a href="https://zencloudau.github.io/vaf-sa" target="_blank" rel="noopener">Live site</a>
+        </div>
+      </div>
+
+      <div class="proj-card">
+        <div class="proj-head">
+          <span class="proj-name">vsf-match</span>
+          <span class="proj-live">live</span>
+        </div>
+        <p>VSF Match. AI-powered job scoring tool using the Velocity Success Factor framework. Scores role alignment against personal capability vectors.</p>
+        <div class="proj-stack">Anthropic SDK</div>
+        <div class="proj-links">
+          <a href="https://github.com/ZenCloudAU/vsf-match" target="_blank" rel="noopener">GitHub</a>
+        </div>
+      </div>
+
+      <div class="proj-card">
+        <div class="proj-head">
+          <span class="proj-name">ea-artefact-generator</span>
+          <span class="proj-live">live</span>
+        </div>
+        <p>EA Artefact Generator. TOGAF 10 ADM aligned enterprise architecture artefact builder. Generates structured EA deliverables from natural language prompts.</p>
+        <div class="proj-stack">Anthropic SDK &middot; TOGAF 10</div>
+        <div class="proj-links">
+          <a href="https://github.com/ZenCloudAU/ea-artefact-generator" target="_blank" rel="noopener">GitHub</a>
+        </div>
+      </div>
+
+      <div class="proj-card">
+        <div class="proj-head">
+          <span class="proj-name">agentic-cert</span>
+        </div>
+        <p>Agentic AI certification study hub. Study content for CCA-F (Claude 101) and GH-600 (Claude Code in Action). Both completed May 2026.</p>
+        <div class="proj-stack">Markdown</div>
+        <div class="proj-links">
+          <a href="https://github.com/ZenCloudAU/agentic-cert" target="_blank" rel="noopener">GitHub</a>
+        </div>
+      </div>
+
+      <div class="proj-card">
+        <div class="proj-head">
+          <span class="proj-name">AzureSACertification</span>
+          <span class="proj-live">live</span>
+        </div>
+        <p>Azure Solution Architect certification study site. Structured preparation content for AZ-305, published via GitHub Pages.</p>
+        <div class="proj-stack">HTML &middot; GitHub Pages</div>
+        <div class="proj-links">
+          <a href="https://github.com/ZenCloudAU/AzureSACertification" target="_blank" rel="noopener">GitHub</a>
+          <a href="https://zencloudau.github.io/AzureSACertification" target="_blank" rel="noopener">Live site</a>
+        </div>
+      </div>
+
+      <div class="proj-card">
+        <div class="proj-head">
+          <span class="proj-name">SAPEACertification</span>
+          <span class="proj-live">live</span>
+        </div>
+        <p>SAP Enterprise Architecture certification study site. Study companion for SAP EA credentialing, published via GitHub Pages.</p>
+        <div class="proj-stack">HTML &middot; GitHub Pages</div>
+        <div class="proj-links">
+          <a href="https://github.com/ZenCloudAU/SAPEACertification" target="_blank" rel="noopener">GitHub</a>
+          <a href="https://zencloudau.github.io/SAPEACertification" target="_blank" rel="noopener">Live site</a>
+        </div>
+      </div>
+
+      <div class="proj-card">
+        <div class="proj-head">
+          <span class="proj-name">CISSPCertification</span>
+        </div>
+        <p>CISSP security architecture study companion. Domain-by-domain preparation content from a solution architect's perspective.</p>
+        <div class="proj-stack">Markdown</div>
+        <div class="proj-links">
+          <a href="https://github.com/ZenCloudAU/CISSPCertification" target="_blank" rel="noopener">GitHub</a>
+        </div>
+      </div>
+
+      <div class="proj-card">
+        <div class="proj-head">
+          <span class="proj-name">learn-with-claude</span>
+        </div>
+        <p>This journal. The raw learning record. Every module, every error, every fix from real sessions. One architect. Zero coding background. Building in public.</p>
+        <div class="proj-stack">Markdown &middot; HTML</div>
+        <div class="proj-links">
+          <a href="https://github.com/ZenCloudAU/learn-with-claude" target="_blank" rel="noopener">GitHub</a>
+        </div>
+      </div>
+
+      <div class="proj-card">
+        <div class="proj-head">
+          <span class="proj-name">studiosix</span>
+          <span class="proj-live">live</span>
+        </div>
+        <p>StudioSix. Architecture-led AI delivery studio. The professional face of the work &mdash; client capability, delivery frameworks, finished products.</p>
+        <div class="proj-stack">HTML &middot; CSS</div>
+        <div class="proj-links">
+          <a href="https://github.com/ZenCloudAU/studiosix" target="_blank" rel="noopener">GitHub</a>
+          <a href="https://studiosix.com.au" target="_blank" rel="noopener">Live site</a>
+        </div>
+      </div>
+
+      <div class="proj-card">
+        <div class="proj-head">
+          <span class="proj-name">trading-dashboard</span>
+        </div>
+        <p>Personal trading workflow dashboard. Educational tool only &mdash; built to understand how financial data interfaces are structured, not for trading advice.</p>
+        <div class="proj-stack">HTML &middot; JavaScript</div>
+        <div class="proj-links">
+          <a href="https://github.com/ZenCloudAU/trading-dashboard" target="_blank" rel="noopener">GitHub</a>
+        </div>
+      </div>
+
+      <div class="proj-card">
+        <div class="proj-head">
+          <span class="proj-name">pmi-portal</span>
+        </div>
+        <p>PMI portal. Project management integration layer for ZenCloud workflows.</p>
+        <div class="proj-stack">TypeScript</div>
+        <div class="proj-links">
+          <a href="https://github.com/ZenCloudAU/pmi-portal" target="_blank" rel="noopener">GitHub</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ── FOOTER ── -->
 <footer>
-  <span class="footer-brand">ZenCloud Global Consultants</span>
-  <ul class="footer-links">
-    <li><a href="https://velocityarchitectureframework.com" target="_blank" rel="noopener">VAF Platform ↗</a></li>
-    <li><a href="https://github.com/ZenCloudAU" target="_blank" rel="noopener">GitHub ↗</a></li>
-    <li><a href="mailto:phil@myintenterprises.com">Contact</a></li>
-  </ul>
-  <span class="footer-meta">Phil Myint · Brisbane · © 2026</span>
+  <p>Phil Myint &middot; ZenCloud Global Consultants &middot; Brisbane &middot; 2026</p>
+  <p>Professional delivery studio: <a href="https://studiosix.com.au" target="_blank" rel="noopener">studiosix.com.au</a></p>
 </footer>
 
-<!-- ── BACK TO TOP ────────────────────────────────── -->
-<a href="#" class="back-to-top" id="backToTop" aria-label="Back to top">↑</a>
 
 <script>
-(function () {
-  var nav = document.getElementById('mainNav');
-  var btt = document.getElementById('backToTop');
+  const links = document.querySelectorAll('.nav-links a');
+  const sections = document.querySelectorAll('section[id]');
 
-  // Nav scroll state + back to top visibility
-  window.addEventListener('scroll', function () {
-    var y = window.scrollY;
-    nav.classList.toggle('scrolled', y > 40);
-    btt.classList.toggle('visible', y > 400);
-  }, { passive: true });
-
-  // Back to top smooth scroll
-  btt.addEventListener('click', function (e) {
-    e.preventDefault();
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  });
-
-  // Scroll reveal via IntersectionObserver
-  var reveals = document.querySelectorAll('.reveal');
-  if ('IntersectionObserver' in window) {
-    var observer = new IntersectionObserver(function (entries) {
-      entries.forEach(function (entry) {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
-          observer.unobserve(entry.target);
-        }
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (!e.isIntersecting) return;
+      links.forEach(l => {
+        l.classList.toggle('active', l.getAttribute('href') === '#' + e.target.id);
       });
-    }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
-    reveals.forEach(function (el) { observer.observe(el); });
-  } else {
-    reveals.forEach(function (el) { el.classList.add('visible'); });
-  }
-})();
+    });
+  }, { rootMargin: '-30% 0px -50% 0px' });
+
+  sections.forEach(s => io.observe(s));
 </script>
 
 </body>
