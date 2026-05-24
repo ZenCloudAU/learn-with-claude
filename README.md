@@ -3,9 +3,26 @@
 
 ---
 
-> **What this is:** Everything we built together — decoded, explained, and turned into a learning path you can follow at your own pace.
->
-> **Who this is for:** You. An enterprise architect with zero formal coding background who has, despite that, built and shipped a live AI-powered cloud system. This repo explains what you built, what every part does, and how to keep going.
+Learn with Claude is an AI-assisted coding and delivery learning path built from real project sessions across Git, TypeScript, Docker, Azure, GitHub Actions, and architecture tooling.
+
+## Purpose
+
+This repo turns practical build sessions into a structured learning path. It explains the tools, commands, project structure, deployment flow, and troubleshooting patterns behind the architecture projects in the ZenCloudAU / Velocity Architecture ecosystem.
+
+## Who It Is For
+
+- Enterprise architects learning enough software delivery to direct AI-assisted build work.
+- Architecture practitioners who need practical confidence with Git, GitHub, terminal commands, TypeScript, Docker, Azure, and CI/CD.
+- StudioSix and Velocity Architecture collaborators who need the operating context behind the build workflow.
+- Builders who learn best from real projects rather than abstract coding tutorials.
+
+## Ecosystem Fit
+
+Learn with Claude is the practitioner learning layer for the Velocity Architecture / StudioSix ecosystem. It does not replace the framework, tools, or commercial delivery wrapper; it explains how the work is built, tested, deployed, and understood.
+
+## Current Status
+
+Usable learning repository. It keeps the learning-journey character of the original sessions while making the entry point clearer for public readers.
 
 ---
 
